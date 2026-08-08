@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- color tokens ---- */
+  --color-midnight: #0a0f1e;
+  --color-midnight-soft: #0e1526;
+  --color-panel: #121b32;
+  --color-panel-2: #17233f;
+  --color-border: #263252;
+  --color-violet: #8577e8;
+  --color-violet-dim: #5b4fb0;
+  --color-coral: #f0785a;
+  --color-coral-dim: #c85a40;
+  --color-cream: #f6f1e6;
+  --color-teal: #49d9c6;
+  --color-slate: #94a0c2;
+  --color-slate-dim: #5c688c;
+
+  /* ---- fonts ---- */
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-pixel: "Silkscreen", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-midnight);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-coral);
+  color: var(--color-midnight);
+}
+
+/* pixelated rendering for tiny svg motifs */
+.pixel-crisp {
+  image-rendering: pixelated;
+  shape-rendering: crispEdges;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* focus visibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(24px); }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
