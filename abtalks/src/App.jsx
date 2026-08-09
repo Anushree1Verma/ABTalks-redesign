@@ -1,12 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
+import Dashboard from "./pages/Dashboard";
+import ChallengeDay from "./pages/ChallengeDay";
 
-// Phase 1: only the landing page ("/") is being built.
-// /dashboard and /day/:id will be added in the next phase.
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Landing />} />
+      <Route path="/"        element={<Landing />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/day/12"  element={<ChallengeDay />} />
+      {/* Redirect any other /day/:id to the demo day */}
+      <Route path="/day/:id" element={<ChallengeDay />} />
     </Routes>
   );
 }
