@@ -1,60 +1,79 @@
-# ABTalks — Quest (redesign, Phase 1)
+# ABTalks Quest — Redesign
 
-A mobile-first redesign of ABTalks' landing experience: "Duolingo-level gamification +
-modern SaaS + subtle pixel/RPG accents," aimed at Indian college students doing a
-60-day daily coding + LinkedIn challenge.
-
-**This phase ships only the landing page (`/`).** `/dashboard` and `/day/12` are
-intentionally not built yet — we're working phase by phase.
+A mobile-first redesign of the ABTalks 60-day coding challenge platform.  
+Concept: *Retro-futuristic pixel adventure × modern product design × career/coding culture.*
 
 ## Route map
 
 ```text
 /
+/dashboard
+/day/12
 ```
-
-(`/dashboard` and `/day/12` will be added in later phases.)
 
 ## Run locally
 
 ```bash
 npm install
-npm run dev       # http://localhost:5173
+npm run dev       # http://localhost:5173/
 ```
 
 ## Build
 
 ```bash
 npm run build
-npm run preview   # serves the production build
+npm run preview
 ```
 
 ## Stack
 
-React 19 + Vite + Tailwind CSS v4 + React Router + Lucide React + Framer Motion.
-No backend, no auth, no database — this phase is pure UI.
+React 19 + Vite 8 + Tailwind CSS v4 + React Router v7 + Lucide React + Framer Motion.  
+No backend, no auth, no database — mocked data only.
 
-## Design direction
+## Design decisions
 
-- **Concept:** "ABTalks Quest" — the 60-day challenge framed as a journey (Day 1 →
-  milestones → Day 60), not a childish game. ~90% modern product UI, ~10% pixel/RPG accents.
-- **Palette:** deep midnight navy background, muted violet, warm coral, soft cream text,
-  and an electric teal accent (a "terminal" note that keeps this from reading as a generic
-  purple/orange gaming palette).
-- **Type:** Space Grotesk for display/headings, Inter for body copy, Silkscreen (used
-  sparingly) for pixel-style eyebrow labels and milestone tags.
-- **Signature element:** the "Quest Path" — a dashed pixel trail with clipped-corner
-  milestone badges, appearing as a compact horizontal teaser in the hero and as the full
-  vertical trail in the "60-Day Journey" section.
-- All pixel motifs (stars, clouds, trail, badges) are hand-built with CSS/SVG — no image
-  assets, so the build stays light and deploys reliably.
+**Color:** Each section has its own ambient background zone (deep-purple hero, forest-teal "What is", cosmos journey, ember "Why finish", violet-coral final CTA) — not one flat navy background throughout.
 
-## Structure
+**Signature:** The Quest Path — a pixel-dotted trail with clipped-corner checkpoint badges. Appears compact/horizontal in the hero, full/vertical with spring-animated reveals in the Journey section.
+
+**Typography:** Space Grotesk (bold display) + Inter (readable body, ~16–18px) + Silkscreen only for 10–11px eyebrow/pixel labels.
+
+**Animation:** Twinkling stars, drifting clouds, parallax hero scroll, spring checkpoint pops, XP bar fill, shimmer headline, particle burst on CTA click, RAF-based custom pixel cursor (desktop only).
+
+**Edge cases handled:**
+- Missed day (Day 5) shows warning banner on dashboard; streak reset message.
+- Empty avatar → pixel-art initials fallback (PixelAvatar).
+- Day 13 locked → padlock icon + disabled nav.
+- Submit button disabled until both URLs are entered.
+
+## File structure
 
 ```text
 src/
-  components/   Navbar, PixelStars, PixelCloud, JourneyPath, QuestCard, SectionHeading, CTAButton
-  pages/        Landing.jsx
-  data/         landing.js (mock copy/content, no backend)
-  App.jsx       routes ("/" only, this phase)
+  components/
+    CTAButton.jsx        — pixel-clipped button with particle burst
+    CustomCursor.jsx     — RAF pixel cursor + trail (desktop only)
+    JourneyPath.jsx      — animated vertical checkpoint trail
+    Navbar.jsx           — sticky nav with pixel logo
+    PixelAvatar.jsx      — initials fallback for empty profiles
+    PixelCharacter.jsx   — 12×16 pixel developer avatar
+    PixelCloud.jsx       — drifting pixel SVG cloud
+    PixelMountains.jsx   — hero background silhouette
+    PixelStars.jsx       — twinkling star field
+    QuestCard.jsx        — terminal-style quest card
+    SectionHeading.jsx   — eyebrow + large heading
+    StreakCalendar.jsx   — 12-cell heatmap calendar
+    XPBar.jsx            — animated RPG-style XP gauge
+  pages/
+    Landing.jsx          — / (hero + all sections)
+    Dashboard.jsx        — /dashboard
+    ChallengeDay.jsx     — /day/12
+  data/
+    landing.js           — landing page copy & content
+    mockUser.js          — mocked student, days, day-12 task
+  App.jsx
+  main.jsx
+  index.css              — Tailwind v4 theme tokens + keyframes
 ```
+
+No external image assets — all pixel art is CSS/SVG.
